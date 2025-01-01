@@ -1,14 +1,11 @@
 // options3.cairo
 // Execute `starklings hint options3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 #[derive(Drop)]
 struct Student {
     name: felt252,
     courses: Array<Option<felt252>>,
 }
-
 
 fn display_grades(student: @Student, index: usize) {
     // don't mind these lines! They are required when
@@ -37,8 +34,15 @@ fn display_grades(student: @Student, index: usize) {
     // TODO: Modify the following lines so that if there is a grade for the course, it is printed.
     //       Otherwise, print "No grade".
     // 
-    println!("grade is {}", course.unwrap());
-    display_grades(student, index + 1);
+    match student.courses.at(index) {
+        Option::Some(_) => {
+            println!("grade is {}", course.unwrap());
+            display_grades(student, index + 1);
+        },
+        Option::None => {
+            println!("No grade");
+        },
+    }
 }
 
 
